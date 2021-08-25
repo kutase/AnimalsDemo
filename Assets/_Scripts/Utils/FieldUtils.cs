@@ -17,5 +17,19 @@ namespace AnimalsDemo.Utils
 
             return position;
         }
+
+        public Vector3 FindNextFreePosition(Vector3 center, float distance, float checkRadius, float globalMaxRadius)
+        {
+            Vector3 position;
+
+            do
+            {
+                position = center + Quaternion.Euler(0f, Random.Range(0, 360f), 0f) *
+                           (Vector3.forward * (distance * Random.Range(0f, 1f)));
+            }
+            while ((Vector3.Distance(Vector3.zero, position) > globalMaxRadius) || Physics.CheckSphere(position, checkRadius));
+
+            return position;
+        }
     }
 }

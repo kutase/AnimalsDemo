@@ -22,16 +22,23 @@ namespace AnimalsDemo
         [Inject]
         private FieldUtils fieldUtils;
 
+        [Inject]
+        private FoodManager foodManager;
+
         public void GenerateAnimals(float fieldSize, int animalsCount, float animalSpeed)
         {
-            StartCoroutine(GenerateAnimalsProcess(fieldSize, animalsCount, animalSpeed));
+            var maxRadius = fieldSize / 2f;
+
+            foodManager.SetMaxRadius(maxRadius);
+            
+            StartCoroutine(GenerateAnimalsProcess(maxRadius, animalsCount, animalSpeed));
         }
 
-        public IEnumerator GenerateAnimalsProcess(float fieldSize, int animalsCount, float animalSpeed)
+        public IEnumerator GenerateAnimalsProcess(float maxRadius, int animalsCount, float animalSpeed)
         {
             for (int i = 0; i < animalsCount; i++)
             {
-                var position = fieldUtils.FindNextFreePosition(Vector3.zero, fieldSize / 2f, animalRadius);
+                var position = fieldUtils.FindNextFreePosition(Vector3.zero, maxRadius, animalRadius);
 
                 var animal = container.InstantiatePrefab(animalPrefab, position, Quaternion.identity, null)
                     .GetComponent<ICollector>();

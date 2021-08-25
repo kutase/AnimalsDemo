@@ -20,6 +20,7 @@ namespace AnimalsDemo
             Container.Bind<IObjectPool>().WithId("FoodPool").FromInstance(FoodPool).AsSingle();
 
             Container.Bind<AnimalsManager>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<FoodManager>().FromComponentInHierarchy().AsSingle();
             Container.Bind<SimulationManager>().FromComponentInHierarchy().AsSingle();
             Container.Bind<ScreenController>().FromComponentInHierarchy().AsSingle();
         }

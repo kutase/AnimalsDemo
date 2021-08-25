@@ -10,6 +10,11 @@ namespace AnimalsDemo
         [SerializeField]
         private float foodRadius = 0.5f;
 
+        [SerializeField]
+        private float maxDistanceTime = 5f;
+
+        private float maxRadius = 1f;
+
         [Inject]
         private FoodCollectedEvent foodCollectedEvent;
         
@@ -26,12 +31,22 @@ namespace AnimalsDemo
 
         private void OnFoodCollected(ICollector collector)
         {
-            var nextFoodPosition = fieldUtils.FindNextFreePosition(collector.Transform.position, collector.MoveSpeed * 5f, foodRadius);
+            var nextFoodPosition = fieldUtils.FindNextFreePosition(
+                collector.Transform.position,
+                collector.MoveSpeed * maxDistanceTime,
+                foodRadius,
+                maxRadius
+            );
 
             var food = FoodPool.Create(nextFoodPosition, Quaternion.identity)
                 .GetComponent<ICollectable>();
 
             collector.SetTarget(food);
+        }
+
+        public void SetMaxRadius(float maxRadius)
+        {
+            this.maxRadius = maxRadius;
         }
     }
 }

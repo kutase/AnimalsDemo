@@ -18,13 +18,20 @@ namespace AnimalsDemo
         [Inject]
         private FoodCollectedEvent foodCollectedEvent;
 
+        private Rigidbody rb;
+
         private void Awake()
         {
+            rb = GetComponent<Rigidbody>();
+
             foodCollectedEvent.Invoke(this);
         }
 
         private void FixedUpdate()
         {
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+
             if (food == null)
             {
                 return;
@@ -39,6 +46,7 @@ namespace AnimalsDemo
             {
                 food.Collect();
                 foodCollectedEvent.Invoke(this);
+
                 return;
             }
 
