@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using AnimalsDemo;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
-public class SetupSimulationScreen : MonoBehaviour
+public class SetupSimulationScreen : MonoBehaviour, IScreen
 {
+    public ScreenType ScreenType => ScreenType.Setup;
+
     [SerializeField]
     private Slider fieldSizeSlider;
 
@@ -23,6 +27,12 @@ public class SetupSimulationScreen : MonoBehaviour
 
     [SerializeField]
     private TMP_Text animalSpeedValueText;
+
+    [Inject]
+    private SimulationManager simulationManager;
+
+    [Inject]
+    private ScreenController screenController;
 
     private void Awake()
     {
@@ -56,6 +66,18 @@ public class SetupSimulationScreen : MonoBehaviour
 
     public void OnSimulationStartClick()
     {
-        
+        simulationManager.StartSimulation(fieldSizeSlider.value, (int)animalsCountSlider.value, animalSpeedSlider.value);
+
+        screenController.SetScreen(ScreenType.Main);
+    }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 }

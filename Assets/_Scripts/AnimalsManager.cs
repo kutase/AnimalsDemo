@@ -12,12 +12,9 @@ namespace AnimalsDemo
     {
         [SerializeField]
         private float animalRadius = 1f;
-        
-        [SerializeField]
-        private GameObject animalPrefab;
 
         [SerializeField]
-        private int animalsCount = 10;
+        private GameObject animalPrefab;
 
         [Inject]
         private DiContainer container;
@@ -25,19 +22,21 @@ namespace AnimalsDemo
         [Inject]
         private FieldUtils fieldUtils;
 
-        private void Start()
+        public void GenerateAnimals(float fieldSize, int animalsCount, float animalSpeed)
         {
-            StartCoroutine(GenerateAnimals());
+            StartCoroutine(GenerateAnimalsProcess(fieldSize, animalsCount, animalSpeed));
         }
 
-        public IEnumerator GenerateAnimals()
+        public IEnumerator GenerateAnimalsProcess(float fieldSize, int animalsCount, float animalSpeed)
         {
             for (int i = 0; i < animalsCount; i++)
             {
-                var position = fieldUtils.FindNextFreePosition(Vector3.zero, animalsCount * 2f, animalRadius);
+                var position = fieldUtils.FindNextFreePosition(Vector3.zero, fieldSize / 2f, animalRadius);
 
                 var animal = container.InstantiatePrefab(animalPrefab, position, Quaternion.identity, null)
                     .GetComponent<ICollector>();
+
+                animal.SetSpeed(animalSpeed);
 
                 yield return null;
             }

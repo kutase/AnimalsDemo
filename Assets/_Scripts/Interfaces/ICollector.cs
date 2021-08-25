@@ -5,5 +5,7 @@ namespace AnimalsDemo
         float MoveSpeed { get; }
         
         void SetTarget(ICollectable collectable);
+
+        void SetSpeed(float speed);
     }
 }

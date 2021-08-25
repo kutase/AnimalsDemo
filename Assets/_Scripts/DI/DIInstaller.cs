@@ -18,6 +18,10 @@ namespace AnimalsDemo
             Container.Bind<FoodCollectedEvent>().FromInstance(new FoodCollectedEvent()).AsSingle();
             Container.Bind<FieldUtils>().FromInstance(new FieldUtils()).AsSingle();
             Container.Bind<IObjectPool>().WithId("FoodPool").FromInstance(FoodPool).AsSingle();
+
+            Container.Bind<AnimalsManager>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<SimulationManager>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<ScreenController>().FromComponentInHierarchy().AsSingle();
         }
     }
 }

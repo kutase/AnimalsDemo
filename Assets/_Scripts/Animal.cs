@@ -50,5 +50,10 @@ namespace AnimalsDemo
         {
             food = collectable;
         }
+
+        public void SetSpeed(float speed)
+        {
+            moveSpeed = speed;
+        }
     }
 }
