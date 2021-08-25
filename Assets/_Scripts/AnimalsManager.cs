@@ -42,19 +42,5 @@ namespace AnimalsDemo
                 yield return null;
             }
         }
-
-//        private Vector3 GetNextFreePosition()
-//        {
-//            Vector3 position;
-//
-//            do
-//            {
-//                position = Quaternion.Euler(0f, Random.Range(0, 360f), 0f) *
-//                               (Vector3.forward * (animalsCount * 2f * Random.Range(0f, 1f)));
-//            }
-//            while (Physics.CheckSphere(position, 1f));
-//
-//            return position;
-//        }
     }
 }

@@ -10,14 +10,14 @@ namespace AnimalsDemo
         [SerializeField]
         private float foodRadius = 0.5f;
 
-        [SerializeField]
-        private GameObject foodPrefab;
-
         [Inject]
         private FoodCollectedEvent foodCollectedEvent;
         
         [Inject]
         private FieldUtils fieldUtils;
+
+        [Inject(Id="FoodPool")]
+        private IObjectPool FoodPool;
 
         private void Awake()
         {
@@ -27,10 +27,8 @@ namespace AnimalsDemo
         private void OnFoodCollected(ICollector collector)
         {
             var nextFoodPosition = fieldUtils.FindNextFreePosition(collector.Transform.position, collector.MoveSpeed * 5f, foodRadius);
-//                collector.Transform.position + Quaternion.Euler(0f, Random.Range(0, 360f), 0f) *
-//                                   (Vector3.forward * (collector.MoveSpeed * 5f * Random.Range(0f, 1f)));
 
-            var food = Instantiate(foodPrefab, nextFoodPosition, Quaternion.identity)
+            var food = FoodPool.Create(nextFoodPosition, Quaternion.identity)
                 .GetComponent<ICollectable>();
 
             collector.SetTarget(food);

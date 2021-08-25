@@ -10,10 +10,14 @@ namespace AnimalsDemo
 {
     public class DIInstaller : MonoInstaller
     {
+        [SerializeField]
+        private CommonPool FoodPool;
+
         public override void InstallBindings()
         {
             Container.Bind<FoodCollectedEvent>().FromInstance(new FoodCollectedEvent()).AsSingle();
             Container.Bind<FieldUtils>().FromInstance(new FieldUtils()).AsSingle();
+            Container.Bind<IObjectPool>().WithId("FoodPool").FromInstance(FoodPool).AsSingle();
         }
     }
 }
